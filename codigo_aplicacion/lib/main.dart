@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pantalla2.dart'; // ajusta la ruta según la ubicación real del archivo
+import 'pantalla2.dart'; 
 
 void main() {
   runApp(const MainApp());
