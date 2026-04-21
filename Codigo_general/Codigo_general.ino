@@ -15,6 +15,12 @@ void mediciones();
 int msboton = 0
 float ax, ay, az;
 float gx, gy, gz;
+IPAddress ip(10.162.4.132);
+IPAddress gateway(10.162.4.132);
+IPAddress subnet(255, 255, 255, 0);
+WiFi.config(ip, gateway, subnet); // Static IP setup
+WiFi.begin(ssid, password);
+
 #define PIN_BOTON =
 #define PIN_LED_R =
 #define PIN_LED_G =
@@ -30,17 +36,20 @@ void setup() {
   pinMode(PIN_LED_G, OUTPUT);
   pinMode(PIN_LED_B, OUTPUT);
   pinMode(PIN_BOTON, INPUT_PULLUP);
+
+  WiFi.softAP(ssid, password);
   server.begin();
+  
   Serial.begin(57600);  //Iniciando puerto serial
   Wire.begin();         //Iniciando I2C
   sensor.initialize();  //Iniciando el sensor
   WiFi.softAP(ssid, password);
-  IPAddress ip = Wifi.soft if (sensor.testConnection()) {
-    Serial.println("Sensor iniciado correctamente");
-  }
-  else {
-    Serial.println("Error al iniciar el sensor");
-  }
+  IPAddress IP = WiFi.softAPIP();
+   Serial.print("AP IP address: ");
+  Serial.println(IP);
+  server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(200, "text/plain", readTemp().c_str());
+  });
 }
 
 
