@@ -12,14 +12,14 @@ typedef enum { RST,
 estadoMaq_General_t estadoMaq_General = RST;
 void medicionesEstandar();
 void mediciones();
-
+int msboton = 0
 float ax, ay, az;
 float gx, gy, gz;
 #define PIN_BOTON =
 #define PIN_LED_R =
 #define PIN_LED_G =
 #define PIN_LED_B =
-
+#define PIN_BOTON = 
 const char* ssid = "ESP32_C3_Server";
 const char* password = "GRUPO3";
 WebServer server(80);
@@ -29,6 +29,7 @@ void setup() {
   pinMode(PIN_LED_R, OUTPUT);
   pinMode(PIN_LED_G, OUTPUT);
   pinMode(PIN_LED_B, OUTPUT);
+  pinMode(PIN_BOTON, INPUT_PULLUP);
   server.begin();
   Serial.begin(57600);  //Iniciando puerto serial
   Wire.begin();         //Iniciando I2C
@@ -74,9 +75,14 @@ void Maq_General() {
     //digitalWrite(PIN_LED_R,255);
     //digitalWrite(PIN_LED_G,0);
     //digitalWrite(PIN_LED_B,0);
-
+      if(digitalRead(PIN_BOTON == LOW){
+      Serial.println("se toco el boton termino la serie);
+    }
     //analizan valores, devolucion led, se guardan los errores, apreto el boton termina la serie
     case ANALISIS_SERIE:
+    if(digitalRead(PIN_BOTON == LOW && msboton >= 5000){
+      Serial.println("se mas de 5s, apagar sistema);
+    }
     //analisis errores generales, apreto boton 5s apaga sistema
     case C_APLICACION:
   }
