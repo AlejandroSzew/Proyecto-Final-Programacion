@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'pantalla2.dart'; 
-import 'pantalla3.dart'; 
-import 'pantalla4.dart'; 
-import 'main.dart'; 
-import 'pantalla6.dart';
+import 'package:go_router/go_router.dart'
+import 'package:url_launcher/url_launcher.dart';
 
-class Pantalla5 extends StatelessWidget {
-  const Pantalla5({super.key});
+
+class Videoejercicios extends StatelessWidget {
+  const Videoejercicios({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Uri url = Uri.parse("https://www.youtube.com/shorts/WrpQYs_n_Pw");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ejercicios")
@@ -66,21 +65,8 @@ class Pantalla5 extends StatelessWidget {
                   ]
                   )
                   ),
-    body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>  Pantalla6()),
-            );
-              }, child: const Text("Nuevo ejericio")),
-              
-            ],
-          ),
-        ), 
-    );
+    body: const ListaEjercicios(),
+        ); 
+    
   }
 }

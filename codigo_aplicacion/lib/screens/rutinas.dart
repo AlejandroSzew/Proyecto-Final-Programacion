@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'pantalla2.dart'; 
-import 'pantalla3.dart'; 
-import 'pantalla4.dart'; 
-import 'main.dart'; 
-import 'pantalla5.dart'; 
-class Pantalla2 extends StatelessWidget {
-  const Pantalla2({super.key});
+import 'package:go_router/go_router.dart'
+
+
+class Rutinas extends StatelessWidget {
+  const Rutinas({super.key});
 
   @override
   Widget build(BuildContext context) {

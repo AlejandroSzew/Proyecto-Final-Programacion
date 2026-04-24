@@ -1,15 +1,15 @@
 import 'package:codigo_aplicacion/pantalla_bluetooth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-
-class Pantalla4 extends StatefulWidget {
-  const Pantalla4 ({super.key});
+class Configuracion extends StatefulWidget {
+  const Configuracion ({super.key});
 
   @override
-  State<Pantalla4> createState() => _Pantalla4State();
+  State<Configuracion> createState() => _ConfiguracionState();
 }
 
-class _Pantalla4State extends State<Pantalla4> {
+class _ConfiguracionState extends State<Configuracion> {
   bool notificaciones = true;
   bool vibracion = false;
   bool alertasLed = true;
@@ -59,10 +59,7 @@ class _Pantalla4State extends State<Pantalla4> {
             leading: const Icon(Icons.bluetooth),
             title: const Text("Pantalla Bluetooth"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const PantallaBluetooth()),
-              );
+              context.push('/pantallabluetooth'),
             },
           ),
           ListTile(

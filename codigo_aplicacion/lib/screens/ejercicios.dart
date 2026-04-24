@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
-import 'pantalla2.dart'; 
-import 'pantalla3.dart'; 
-import 'pantalla4.dart'; 
-import 'main.dart'; 
-import 'pantalla5.dart'; 
+import 'package:go_router/go_router.dart';
 
-class Pantalla3 extends StatefulWidget {
-  const Pantalla3 ({super.key});
+class Ejercicios extends StatelessWidget {
+  const Ejercicios({super.key});
 
-  @override
-  State<Pantalla3> createState() => _Pantalla3State();
-}
-
-class _Pantalla3State extends State<Pantalla3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Estadisticas")
+        title: const Text("Ejercicios")
       ),
-       drawer: Drawer(
+   drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.all(5),
           children: [
@@ -32,40 +23,28 @@ class _Pantalla3State extends State<Pantalla3> {
               leading: const Icon(Icons.home),
               title: const Text("Inicio"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla1()),
-                );
+                context.push('/homescreen');
               },
             ),
             ListTile(
               leading: const Icon(Icons.fitness_center),
               title: const Text("Rutinas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla2()),
-                );
+                context.push('/rutinas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.bar_chart),
               title: const Text("Estadísticas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla3()),
-                );
+                context.push('/estadisticas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Configuración"),
               onTap: () {
-                Navigator.push(
-                  context,
-                 MaterialPageRoute(builder: (context) =>  Pantalla4()),
-                 );
+                context.push('/configuracion');
                   }
                   )
                   ]
@@ -75,15 +54,12 @@ class _Pantalla3State extends State<Pantalla3> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-              ElevatedButton(onPressed: () {
-                Navigator.push(
-               context,
-               MaterialPageRoute(builder: (context) =>   Pantalla4()),
-            );
-              } , 
-              child: const Text('Estadisticas'))
-             
+              ElevatedButton(
+              onPressed: () {
+              context.push('/videoejercicios');
+              },
+              child: const Text("Nuevo ejercicio, tutorial"),
+              ),
             ],
           ),
         ), 
