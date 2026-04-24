@@ -11,6 +11,7 @@ class Rutinas extends StatelessWidget {
       appBar: AppBar(
         title: const Text("bienvenido a tus rutinas")
       ),
+   
    drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.all(5),
@@ -24,40 +25,28 @@ class Rutinas extends StatelessWidget {
               leading: const Icon(Icons.home),
               title: const Text("Inicio"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla1()),
-                );
+                context.push('/homescreen');
               },
             ),
             ListTile(
               leading: const Icon(Icons.fitness_center),
               title: const Text("Rutinas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla2()),
-                );
+                context.push('/rutinas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.bar_chart),
               title: const Text("Estadísticas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla3()),
-                );
+                context.push('/estadisticas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Configuración"),
               onTap: () {
-                Navigator.push(
-                  context,
-                 MaterialPageRoute(builder: (context) =>  Pantalla4()),
-                 );
+                context.push('/configuracion');
                   }
                   )
                   ]
@@ -85,9 +74,7 @@ class Rutinas extends StatelessWidget {
     
               ElevatedButton(
                 onPressed: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>  Pantalla5()),
+                context.push('/ejercicios');
             );
               }, child: const Text("Nuevo ejericio")),
               

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class Ejercicios extends StatelessWidget {
   const Ejercicios({super.key});
-
+  String feedback = 'bien hecho el curl de biceps un poco de inclinación en el eje izquierdo'
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +60,16 @@ class Ejercicios extends StatelessWidget {
               },
               child: const Text("Nuevo ejercicio, tutorial"),
               ),
+              Card(
+              child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+              feedback,
+               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  ),
+)
+
             ],
           ),
         ), 
