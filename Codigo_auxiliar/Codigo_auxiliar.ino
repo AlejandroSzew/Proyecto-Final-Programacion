@@ -32,22 +32,13 @@ void setup() {
   } else {
     Serial.println("Error al iniciar el sensor");
   }  //Iniciando el sensor
-
+  while(WiFi.status() != WL_CONNECTED) { 
+    delay(500);
+    Serial.print(".");
+  }
   WiFi.softAP(ssid, password);
   Serial.print("AP IP address: ");
   Serial.println(WiFi.softAPIP());
-
-  // Endpoints para que el principal lea datos
-  server.on("/accel", HTTP_GET, []() {
-    sensor.getAcceleration(&ax, &ay, &az);
-    String data = String(ax * 9.81) + "," + String(ay * 9.81) + "," + String(az * 9.81);
-    server.send(200, "text/plain", data);
-  });
-  server.on("/gyro", HTTP_GET, []() {
-    sensor.getRotation(&gx, &gy, &gz);
-    String data = String(gx) + "," + String(gy) + "," + String(gz);
-    server.send(200, "text/plain", data);
-  });
 }
 
 
@@ -61,8 +52,12 @@ void Maq_Auxiliar() {
 
 
     case MEDICIONES:
+     if(WiFi.status()== WL_CONNECTED ){ 
+      Serial.println("se conceto a wifi preparando mediciones");
       medicionesEstandar();
       mediciones();
+     }
+      
 
 
     case C_WIFI:
@@ -77,7 +72,6 @@ void medicionesEstandar() {
   int valores_estandar_ax = ax * 9.81;
   int valores_estandar_ay = ay * 9.81;
   int valores_estandar_az = az * 9.81;
-
   int valores_estandar_gx = gx; 
   int valores_estandar_gy = gy; 
   int valores_estandar_gz = gz ;
@@ -92,7 +86,7 @@ void medicionesEstandar() {
   String gyro = httpGETRequest(serverNameGyro);
   Serial.println("Accel: " + accel + " Gyro: " + gyro);
 }
-
+  Serial.println("");
 void mediciones() {
   sensor.getAcceleration(&ax, &ay, &az);  //aceleracion del sensor en x, y, z
   sensor.getRotation(&gx, &gy, &gz);      //angulo del sensor en x, y, z
