@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'pantalla2.dart'; 
 import 'pantalla3.dart'; 
 import 'pantalla4.dart'; 
-import 'main.dart'; 
-import 'pantalla5.dart'; 
-class Pantalla2 extends StatelessWidget {
-  const Pantalla2({super.key});
+import '../main.dart'; 
+import 'pantalla6.dart';
+
+class Pantalla5 extends StatelessWidget {
+  const Pantalla5({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("bienvenido a tus rutinas")
+        title: const Text("Ejercicios")
       ),
    drawer: Drawer(
         child: ListView(
@@ -69,27 +70,11 @@ class Pantalla2 extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Card(
-                child: ListTile(
-                 title:  Text("Rutina 1-Espalda y biceps")
-                ),
-              ),
-              Card(
-                child: ListTile(
-                 title:  Text("Rutina 2-Pecho y triceps")
-                ),
-              ),
-              Card(
-                child: ListTile(
-                 title:  Text("Rutina 3-Pierna")
-                ),
-              ),
-    
               ElevatedButton(
                 onPressed: () {
                 Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  Pantalla5()),
+                MaterialPageRoute(builder: (context) =>  Pantalla6()),
             );
               }, child: const Text("Nuevo ejericio")),
               

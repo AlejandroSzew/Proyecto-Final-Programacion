@@ -1,4 +1,4 @@
-import 'package:codigo_aplicacion/pantalla_bluetooth.dart';
+import 'package:codigo_aplicacion/screens/pantalla_bluetooth.dart';
 import 'package:flutter/material.dart';
 
 

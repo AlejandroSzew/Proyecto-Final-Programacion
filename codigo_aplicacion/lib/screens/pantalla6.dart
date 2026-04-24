@@ -2,24 +2,21 @@ import 'package:flutter/material.dart';
 import 'pantalla2.dart'; 
 import 'pantalla3.dart'; 
 import 'pantalla4.dart'; 
-import 'main.dart'; 
-import 'pantalla5.dart'; 
+import '../main.dart'; 
+import 'package:url_launcher/url_launcher.dart';
+import '../listaejercicios.dart'; 
 
-class Pantalla3 extends StatefulWidget {
-  const Pantalla3 ({super.key});
+class Pantalla6 extends StatelessWidget {
+  const Pantalla6({super.key});
 
-  @override
-  State<Pantalla3> createState() => _Pantalla3State();
-}
-
-class _Pantalla3State extends State<Pantalla3> {
   @override
   Widget build(BuildContext context) {
+    final Uri url = Uri.parse("https://www.youtube.com/shorts/WrpQYs_n_Pw");
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Estadisticas")
+        title: const Text("Ejercicios")
       ),
-       drawer: Drawer(
+   drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.all(5),
           children: [
@@ -71,22 +68,8 @@ class _Pantalla3State extends State<Pantalla3> {
                   ]
                   )
                   ),
-    body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-              ElevatedButton(onPressed: () {
-                Navigator.push(
-               context,
-               MaterialPageRoute(builder: (context) =>   Pantalla4()),
-            );
-              } , 
-              child: const Text('Estadisticas'))
-             
-            ],
-          ),
-        ), 
-    );
+    body: const ListaEjercicios(),
+        ); 
+    
   }
 }
