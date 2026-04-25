@@ -1,102 +1,67 @@
 #include "I2Cdev.h"
 #include "MPU6050.h"
 #include "Wire.h"
-#include "Wifi.h"
-#include "ESPAsyncWebServer.h"
-
+#include <WiFi.h>
 
 typedef enum { RST,
                INICIALIZACION,
                MEDICIONES,
                C_WIFI,
-               ANALISIS_REP,
-               ANALISIS_SERIE,
-               C_APLICACION } estadoMaq_General_t;
-estadoMaq_General_t estadoMaq_General = RST;
+} estadoMaq_Auxiliar_t;
+estadoMaq_Auxiliar_t estadoMaq_Auxiliar = RST;
 void medicionesEstandar();
 void mediciones();
-int msboton = 0 float ax, ay, az;
+
+float ax, ay, az;
 float gx, gy, gz;
 
-IPAddress ip(10.162.4.132);
-IPAddress gateway(10.162.4.132);
-IPAddress subnet(255, 255, 255, 0);
-WiFi.config(ip, gateway, subnet);  // Static IP setup
-WiFi.begin(ssid, password);
 
-#define PIN_BOTON =
-#define PIN_LED_R =
-#define PIN_LED_G =
-#define PIN_LED_B =
-#define PIN_BOTON =
 const char* ssid = "ESP32_C3_Server";
 const char* password = "GRUPO3";
-AsyncWebServer server(80);
+WebServer server(80);
 
 void setup() {
-  pinMode(PIN_BOTON, INPUT);
-  pinMode(PIN_LED_R, OUTPUT);
-  pinMode(PIN_LED_G, OUTPUT);
-  pinMode(PIN_LED_B, OUTPUT);
-  pinMode(PIN_BOTON, INPUT_PULLUP);
+
+  server.begin();
   Serial.begin(57600);  //Iniciando puerto serial
   Wire.begin();         //Iniciando I2C
-  sensor.initialize();  //Iniciando el sensor
 
+  sensor.initialize();
+  if (sensor.testConnection()) {
+    Serial.println("Sensor iniciado correctamente");
+  } else {
+    Serial.println("Error al iniciar el sensor");
+  }  //Iniciando el sensor
+  while(WiFi.status() != WL_CONNECTED) { 
+    delay(500);
+    Serial.print(".");
+  }
   WiFi.softAP(ssid, password);
-  server.begin();
-  IPAddress IP = WiFi.softAPIP();
   Serial.print("AP IP address: ");
-  Serial.println(IP);
+  Serial.println(WiFi.softAPIP());
 }
 
 
 void loop() {
-  Maq_General();
+  Maq_Auxiliar();
 }
 
-void Maq_General() {
-  switch (estado_Maq_General) {
+void Maq_Auxiliar() {
+  switch (estadoMaq_Auxiliar) {
     case INICIALIZACION:
-    break;
+
 
     case MEDICIONES:
+     if(WiFi.status()== WL_CONNECTED ){ 
+      Serial.println("se conceto a wifi preparando mediciones");
       medicionesEstandar();
       mediciones();
+     }
+      
 
 
     case C_WIFI:
-    server.on("ax", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", readPres().c_str());
-  });
-    //datoss al sensro principal
-    case ANALISIS_REP:
-      //Azul
-      //digitalWrite(PIN_LED_R,0);
-      //digitalWrite(PIN_LED_G,0);
-      //digitalWrite(PIN_LED_B,255);
-
-      //Verde
-      //digitalWrite(PIN_LED_R,0);
-      //digitalWrite(PIN_LED_G,255);
-      //digitalWrite(PIN_LED_B,0);
-
-      //Rojo
-      //digitalWrite(PIN_LED_R,255);
-      //digitalWrite(PIN_LED_G,0);
-      //digitalWrite(PIN_LED_B,0);
-      if(digitalRead(PIN_BOTON == LOW){
-      Serial.println("se toco el boton termino la serie);
-      break;
-    }
-    
-    case ANALISIS_SERIE:
-    if(digitalRead(PIN_BOTON == LOW && msboton >= 5000){
-      Serial.println("se mas de 5s, apagar sistema);
-    }
-    break;
-    //analisis errores generales, apreto boton 5s apaga sistema
-    case C_APLICACION:
+      server.handleClient();  // atiende peticiones HTTP
   }
 }
 
@@ -104,9 +69,12 @@ void Maq_General() {
 void medicionesEstandar() {
   sensor.getAcceleration(&ax, &ay, &az);  //aceleracion del sensor en x, y, z
   sensor.getRotation(&gx, &gy, &gz);      //angulo del sensor en x, y, z
-  int valores_estandar_ax = ax* 9.81 int valores_estandar_ay = ay* 9.81 int valores_estandar_az = az * 9.81;
-
-  int valores_estandar_gx = gx int valores_estandar_gy = gy int valores_estandar_gz = gz
+  int valores_estandar_ax = ax * 9.81;
+  int valores_estandar_ay = ay * 9.81;
+  int valores_estandar_az = az * 9.81;
+  int valores_estandar_gx = gx; 
+  int valores_estandar_gy = gy; 
+  int valores_estandar_gz = gz ;
   Serial.println("valor estandar ax en (m/s^2)", valores_estandar_ax);
   Serial.println("valor estandar ay en (m/s^2)", valores_estandar_ay);
   Serial.println("valor estandar az en (m/s^2)", valores_estandar_az);
@@ -114,10 +82,11 @@ void medicionesEstandar() {
   Serial.println("valor estandar gx en (°/s)", valores_estandar_gx);
   Serial.println("valor estandar gy  en (°/s)", valores_estandar_gy);
   Serial.println("valor estandar gz en (°/s)", valores_estandar_gz);
+  String accel = httpGETRequest(serverNameAccel);
+  String gyro = httpGETRequest(serverNameGyro);
+  Serial.println("Accel: " + accel + " Gyro: " + gyro);
 }
-
-
-
+  Serial.println("");
 void mediciones() {
   sensor.getAcceleration(&ax, &ay, &az);  //aceleracion del sensor en x, y, z
   sensor.getRotation(&gx, &gy, &gz);      //angulo del sensor en x, y, z

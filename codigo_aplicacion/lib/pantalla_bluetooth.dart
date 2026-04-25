@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
-import '../ble_controller.dart';
+import 'ble_controller.dart';
 
 class PantallaBluetooth extends StatelessWidget {
   const PantallaBluetooth({super.key});

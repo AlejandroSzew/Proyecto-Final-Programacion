@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
-import 'screens/pantalla2.dart'; 
-import 'screens/pantalla3.dart'; 
-import 'screens/pantalla4.dart'; 
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp( MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-   MainApp({super.key});
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  Pantalla1(), 
+      home: const HomeScreen(), 
     );
   }
 }
-
-class Pantalla1 extends StatefulWidget {
-  const Pantalla1({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Pantalla1> createState() => _Pantalla1State();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
-
-class _Pantalla1State extends State<Pantalla1> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,47 +42,35 @@ class _Pantalla1State extends State<Pantalla1> {
               leading: const Icon(Icons.home),
               title: const Text("Inicio"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla1()),
-                );
+                context.push('/homescreen');
               },
             ),
             ListTile(
               leading: const Icon(Icons.fitness_center),
               title: const Text("Rutinas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla2()),
-                );
+                context.push('/rutinas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.bar_chart),
               title: const Text("Estadísticas"),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Pantalla3()),
-                );
+                context.push('/estadisticas');
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Configuración"),
               onTap: () {
-                Navigator.push(
-                  context,
-                 MaterialPageRoute(builder: (context) =>  Pantalla4()),
-                 );
+                context.push('/configuracion');
                   }
                   )
                   ]
                   )
-                  )
+                  ),
                
-        ,body: Column(
+        body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
@@ -98,10 +82,7 @@ class _Pantalla1State extends State<Pantalla1> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  Pantalla2()),
-                );
+                context.push('/rutinas');
               },
               child: const Text("Nueva Rutina",style: TextStyle(color: Color.fromARGB(20, 0, 255, 0), fontSize:  22),),
             
