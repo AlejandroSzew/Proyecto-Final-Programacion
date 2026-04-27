@@ -1,3 +1,4 @@
+import 'package:codigo_aplicacion/entities/users.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+   Users miUsuario = Users(
+  name: 'ale',
+  password: 'ale',
+  email: 'ale@gmail.com',
+  age: '20',
+);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(75, 51, 0, 255),
@@ -75,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Card(
               child: ListTile(
-                title: const Text("NOMBRE, EDAD"),
+                title:  Text("Nombre: ${miUsuario.name},   Edad: ${miUsuario.age}"),
                 subtitle: const Text("Peso: "),
               ),
             ),
@@ -87,7 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Text("Nueva Rutina",style: TextStyle(color: Color.fromARGB(20, 0, 255, 0), fontSize:  22),),
             
             ),
+            
           ),
+          ElevatedButton(
+              onPressed: () {
+             context.push('/infousers', extra: miUsuario);
+            },child: Text("Por favor complete su peso y valores aqui ")),
         ],
       )
 

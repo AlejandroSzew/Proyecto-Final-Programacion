@@ -1,3 +1,4 @@
+import 'package:codigo_aplicacion/entities/users.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +16,13 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+  Users miUsuario = Users(
+  name: 'ale',
+  password: 'ale',
+  email: 'ale@gmail.com',
+  age: '20',
+);
+
     return Scaffold(
         appBar: AppBar(title: Text(title)),
         body: Padding(
@@ -45,8 +53,8 @@ class _LoginState extends State<Login> {
                       const SnackBar(content: Text("Por favor completa todos los campos")),
                     );
                   } 
-                  else if (userController.text == "ale" &&
-                      passController.text == "1234") {
+                  else if (userController.text == miUsuario.email &&
+                      passController.text == miUsuario.password) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Login correcto")),
                      

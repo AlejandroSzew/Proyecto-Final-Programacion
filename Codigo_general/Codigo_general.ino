@@ -3,7 +3,11 @@
 #include "Wire.h"
 #include "Wifi.h"
 #include "ESPAsyncWebServer.h"
+#include "BluetoothSerial.h"
 
+
+
+BluetoothSerial SerialBT;
 
 typedef enum { RST,
                INICIALIZACION,
@@ -34,6 +38,8 @@ const char* password = "GRUPO3";
 AsyncWebServer server(80);
 
 void setup() {
+  SerialBT.begin("ESP32_CLASSIC_BT"); //Bluetooth device name
+  Serial.println("The device started, now you can pair it with bluetooth!");
   pinMode(PIN_BOTON, INPUT);
   pinMode(PIN_LED_R, OUTPUT);
   pinMode(PIN_LED_G, OUTPUT);
@@ -97,6 +103,7 @@ void Maq_General() {
     break;
     //analisis errores generales, apreto boton 5s apaga sistema
     case C_APLICACION:
+    SerialBT.write(data);
   }
 }
 
@@ -128,14 +135,15 @@ void mediciones() {
   float valores_gx = gx;
   float valores_gy = gy;
   float valores_gz = gz;
-  /*float diff_ax = valores_ax - valores_estandar_ax;
-float  diff_ay = valores_ay - valores_estandar_ay;
-float  diff_az = valores_az - valores_estandar_az;
 
-float  diff_gx = valores_gx - valores_estandar_gx;
-float  diff_gy = valores_gy -  valores_estandar_gx;
-float  diff_gz = valores_gz -  valores_estandar_gx;
-*/
+  String data = String(valores_ax) + "," +
+                String(valores_ay) + "," +
+                String(valores_az) + "," +
+                String(valores_gx) + "," +
+                String(valores_gy) + "," +
+                String(valores_gz);
+
+  SerialBT.println(data);  
   Serial.println("valores ax en (m/s^2)", valores_ax);
   Serial.println("valor  ay en (m/s^2)", valores_ay);
   Serial.println("valor  az en (m/s^2)", valores_az);

@@ -1,3 +1,4 @@
+import 'package:codigo_aplicacion/entities/users.dart';
 import 'package:codigo_aplicacion/pantalla_bluetooth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,9 +18,18 @@ class _ConfiguracionState extends State<Configuracion> {
 
   @override
   Widget build(BuildContext context){
+    Users miUsuario = Users(
+  name: 'ale',
+  password: 'ale',
+  email: 'ale@gmail.com',
+  age: '20',
+);
+
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("configuracion")
+        backgroundColor: const Color.fromARGB(75, 51, 0, 255),
+        title:  Text("Bienvenido ${miUsuario.name}", style: TextStyle(fontSize: 30),)
       ),
        body: ListView(
         children: [

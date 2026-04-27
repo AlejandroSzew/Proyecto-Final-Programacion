@@ -1,11 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-
-class Ejercicios extends StatelessWidget {
+class Ejercicios extends StatefulWidget {
   const Ejercicios({super.key});
- final String feedback = 'bien hecho el curl de biceps un poco de inclinación en el eje izquierdo';
+
   @override
+  State<Ejercicios> createState() => _EjerciciosState();
+}
+
+class _EjerciciosState extends State<Ejercicios> {
+BluetoothConnection? connection;
+String feedback = "Esperando datos...";
+
+@override
+void initState() {
+  super.initState();
+  _connectToESP32();
+}
+
+Future<void> _connectToESP32() async {
+  try {
+    connection = await BluetoothConnection.toAddress("00:11:22:33:44:55"); // ⚠️ cambia por la MAC de tu ESP32
+    connection!.input!.listen((data) {
+      String recibido = String.fromCharCodes(data).trim();
+      setState(() {
+        feedback = recibido; // mostrar directamente lo recibido
+      });
+    });
+  } catch (e) {
+    setState(() {
+      feedback = "Error al conectar: $e";
+    });
+  }
+}
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

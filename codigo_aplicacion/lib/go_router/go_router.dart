@@ -1,3 +1,4 @@
+import 'package:codigo_aplicacion/screens/infousers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:codigo_aplicacion/screens/login.dart';
 import 'package:codigo_aplicacion/screens/homescreen.dart';
@@ -39,7 +40,10 @@ final appRouter = GoRouter(
       path: '/videoejercicios',
       builder: (context, state) => const Videoejercicios(),
     ),
-
+    GoRoute(
+      path: '/infousers',
+      builder: (context, state) =>  Infousers(),
+    ),
 
   ],
 );
