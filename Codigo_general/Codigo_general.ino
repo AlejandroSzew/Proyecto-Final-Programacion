@@ -33,8 +33,8 @@ WiFi.begin(ssid, password);
 #define PIN_LED_G =
 #define PIN_LED_B =
 #define PIN_BOTON =
-const char* ssid = "ESP32_C3_Server";
-const char* password = "GRUPO3";
+const char* ssid = "MECA-IoT";
+const char* password = "IoT$2026;
 AsyncWebServer server(80);
 
 void setup() {
@@ -107,48 +107,82 @@ void Maq_General() {
   }
 }
 
-
 void medicionesEstandar() {
-  sensor.getAcceleration(&ax, &ay, &az);  //aceleracion del sensor en x, y, z
-  sensor.getRotation(&gx, &gy, &gz);      //angulo del sensor en x, y, z
-  int valores_estandar_ax = ax* 9.81 int valores_estandar_ay = ay* 9.81 int valores_estandar_az = az * 9.81;
 
-  int valores_estandar_gx = gx int valores_estandar_gy = gy int valores_estandar_gz = gz
-  Serial.println("valor estandar ax en (m/s^2)", valores_estandar_ax);
-  Serial.println("valor estandar ay en (m/s^2)", valores_estandar_ay);
-  Serial.println("valor estandar az en (m/s^2)", valores_estandar_az);
+float est_ax = 0.0;   // m/s²
+float est_ay = 9.81;  // m/s²
+float est_az = 0.0;   // m/s²
 
-  Serial.println("valor estandar gx en (°/s)", valores_estandar_gx);
-  Serial.println("valor estandar gy  en (°/s)", valores_estandar_gy);
-  Serial.println("valor estandar gz en (°/s)", valores_estandar_gz);
-}
+float est_inclX = 0.0;  // grados
+float est_inclY = 0.0;  // grados
+float est_inclZ = 90.0; // grados
+  // Margen de tolerancia
+  float tol_acc = 2.0;   // ±2 m/s²
+  float tol_incl = 5.0;  // ±5 grados
+  // Comparación eje por eje
+  if ((ax_ms2 - est_ax) > tol_acc) {
+    Serial.println("Error en aceleración eje X");
+  }
+  if ( (ay_ms2 - est_ay) > tol_acc) {
+    Serial.println("Error en aceleración eje Y");
+  }
+  if ((az_ms2 - est_az) > tol_acc) {
+    Serial.println("Error en aceleración eje Z");
+  }
 
+  if ((inclX - est_inclX) > tol_incl) {
+    Serial.println("Error en inclinación eje X");
+  }
+  if ((inclY - est_inclY) > tol_incl) {
+    Serial.println("Error en inclinación eje Y");
+  }
+  if ((inclZ - est_inclZ) > tol_incl) {
+    Serial.println("Error en inclinación eje Z");
+  }
+  // Si todo está correcto
+  if ((fabs(ax_ms2 - est_ax) < tol_acc) &&
+      (fabs(ay_ms2 - est_ay) < tol_acc) &&
+      (fabs(az_ms2 - est_az) < tol_acc) &&
+      (fabs(inclX - est_inclX) < tol_incl) &&
+      (fabs(inclY - est_inclY) < tol_incl) &&
+      (fabs(inclZ - est_inclZ) < tol_incl)) {
+    Serial.println("Movimiento CORRECTO ✅");
+  } else {
+    Serial.println("Movimiento INCORRECTO ❌");
+  }
+// Variables globales para guardar los valores actuales
+float ax_ms2, ay_ms2, az_ms2;
+float inclX, inclY, inclZ;
 
 
 void mediciones() {
-  sensor.getAcceleration(&ax, &ay, &az);  //aceleracion del sensor en x, y, z
-  sensor.getRotation(&gx, &gy, &gz);      //angulo del sensor en x, y, z
-  float valores_ax = ax * 9.81;
-  float valores_ay = ay * 9.81;
-  float valores_az = az * 9.81;
+  // Leer datos crudos del sensor
+  sensor.getAcceleration(&ax, &ay, &az);
+  sensor.getRotation(&gx, &gy, &gz);
 
-  float valores_gx = gx;
-  float valores_gy = gy;
-  float valores_gz = gz;
+  // Convertir aceleraciones a m/s² (1 g = 9.81 m/s²)
+  float ax_ms2 = (ax / 16384.0) * 9.81;
+  float ay_ms2 = (ay / 16384.0) * 9.81;
+  float az_ms2 = (az / 16384.0) * 9.81;
 
-  String data = String(valores_ax) + "," +
-                String(valores_ay) + "," +
-                String(valores_az) + "," +
-                String(valores_gx) + "," +
-                String(valores_gy) + "," +
-                String(valores_gz);
+  // Calcular inclinaciones en grados usando trigonometría
+  float inclX = atan2(ax_ms2, sqrt(ay_ms2*ay_ms2 + az_ms2*az_ms2)) * 180.0 / PI;
+  float inclY = atan2(ay_ms2, sqrt(ax_ms2*ax_ms2 + az_ms2*az_ms2)) * 180.0 / PI;
+  float inclZ = atan2(az_ms2, sqrt(ax_ms2*ax_ms2 + ay_ms2*ay_ms2)) * 180.0 / PI;
 
-  SerialBT.println(data);  
-  Serial.println("valores ax en (m/s^2)", valores_ax);
-  Serial.println("valor  ay en (m/s^2)", valores_ay);
-  Serial.println("valor  az en (m/s^2)", valores_az);
+  // Enviar datos: 3 aceleraciones + 3 inclinaciones
+  String data = String(ax_ms2) + "," + String(ay_ms2) + "," + String(az_ms2) + "," +
+                String(inclX) + "," + String(inclY) + "," + String(inclZ);
 
-  Serial.println("valor  gx en (°/s)", valores_gx);
-  Serial.println("valor  gy  en (°/s)", valores_gy);
-  Serial.println("valor  gz en (°/s)", valores_gz);
+  SerialBT.println(data);
+  Serial.println(data);
+
+  Serial.print("Aceleración X [m/s²]: "); Serial.println(ax_ms2);
+  Serial.print("Aceleración Y [m/s²]: "); Serial.println(ay_ms2);
+  Serial.print("Aceleración Z [m/s²]: "); Serial.println(az_ms2);
+
+  Serial.print("Inclinación eje X [°]: "); Serial.println(inclX);
+  Serial.print("Inclinación eje Y [°]: "); Serial.println(inclY);
+  Serial.print("Inclinación eje Z [°]: "); Serial.println(inclZ);
 }
+
