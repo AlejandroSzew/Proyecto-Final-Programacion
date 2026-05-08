@@ -8,7 +8,7 @@ void setup() {
   // Inicializar Bluetooth con un nombre visible
   SerialBT.begin("ESP32_BT_MINIMO");
   Serial.println("Bluetooth listo, conecta tu app Flutter.");
-}
+} 
 
 void loop() {
   // Enviar un mensaje fijo

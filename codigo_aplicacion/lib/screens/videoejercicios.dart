@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '/listaejercicios.dart'; 
-import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart'
 import 'package:url_launcher/url_launcher.dart';
-
 
 
 class Videoejercicios extends StatelessWidget {
@@ -16,7 +13,8 @@ class Videoejercicios extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Ejercicios")
       ),
-  drawer: Drawer(
+   
+   drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.all(5),
           children: [

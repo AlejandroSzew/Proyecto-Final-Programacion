@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_blue: ^0.8.0
   get: ^4.6.5
   permission_handler: ^12.0.1
   url_launcher: ^6.2.5
