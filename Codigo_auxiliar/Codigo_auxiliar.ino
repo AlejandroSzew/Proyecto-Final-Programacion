@@ -9,19 +9,14 @@ typedef enum { RST,
                MEDICIONES,
                C_WIFI,
 } estadoMaq_Auxiliar_t;
-estadoMaq_Auxiliar_t estadoMaq_Auxiliar = RST;
+estadoMaq_Auxiliar_t estadoMaq_Auxiliar = INICIALIZACION;
 void medicionesEstandar();
 void mediciones();
 
 float ax, ay, az;
 float gx, gy, gz;
 
-const char* serverNameAx = "http://192.168.4.1/Ax";
-const char* serverNameAy = "http://192.168.4.1/Ay";
-const char* serverNameAz = "http://192.168.4.1/Az";
-const char* serverNameGx = "http://192.168.4.1/Gx";
-const char* serverNameGy = "http://192.168.4.1/Gy";
-const char* serverNameGz = "http://192.168.4.1/Gz";
+
 const char* ssid = "ESP32_C3_Server";
 const char* password = "GRUPO3";
 WebServer server(80);
