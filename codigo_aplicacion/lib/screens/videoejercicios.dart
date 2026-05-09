@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart'
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:codigo_aplicacion/listaejercicios.dart';
 
 class Videoejercicios extends StatelessWidget {
   const Videoejercicios({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Uri url = Uri.parse("https://www.youtube.com/shorts/WrpQYs_n_Pw");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ejercicios")
@@ -54,7 +52,7 @@ class Videoejercicios extends StatelessWidget {
                   ]
                   )
                   ),
-    body: const ListaEjercicios(),
+         body:  ListaEjercicios(), 
         ); 
     
   }
