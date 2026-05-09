@@ -1,7 +1,6 @@
 import 'package:codigo_aplicacion/entities/users.dart';
-import 'package:codigo_aplicacion/pantalla_bluetooth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 
 class Configuracion extends StatefulWidget {
   const Configuracion ({super.key});
@@ -65,13 +64,6 @@ class _ConfiguracionState extends State<Configuracion> {
             },
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.bluetooth),
-            title: const Text("Pantalla Bluetooth"),
-            onTap: () {
-              context.push('/pantallabluetooth');
-            },
-          ),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text("Acerca de la aplicación"),
