@@ -70,19 +70,16 @@ class _EjerciciosState extends State<Ejercicios> {
               },
               child: const Text("Nuevo ejercicio, tutorial"),
               ),
-              Card(
-              child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-              feedback,
-               style: const TextStyle(fontSize: 18),
-    ),
-  ),
+              
+              ElevatedButton(
+              onPressed: () {
+              context.push('/pantalla_bluetooth');
+              },
+              child: const Text("conexion bluetooth"),
+              ),
+            ]
 )
-
-            ],
           ),
-        ), 
-    );
+        ); 
   }
 }

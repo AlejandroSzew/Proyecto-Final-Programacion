@@ -1,3 +1,4 @@
+import 'package:codigo_aplicacion/pantalla_bluetooth.dart';
 import 'package:codigo_aplicacion/screens/infousers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:codigo_aplicacion/screens/login.dart';
@@ -44,6 +45,9 @@ final appRouter = GoRouter(
       path: '/infousers',
       builder: (context, state) =>  Infousers(),
     ),
-
+     GoRoute(
+      path: '/pantallabluetooth',
+      builder: (context, state) =>  PantallaBluetooth(),
+    ),
   ],
 );

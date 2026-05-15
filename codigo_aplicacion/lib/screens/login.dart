@@ -24,7 +24,13 @@ class _LoginState extends State<Login> {
 );
 
     return Scaffold(
-        appBar: AppBar(title: Text(title)),
+       appBar: AppBar(
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -32,21 +38,27 @@ class _LoginState extends State<Login> {
             children: [
               TextField(
                 controller: userController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   icon: Icon(Icons.person),
                   labelText: "Usuario",
+                  labelStyle: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               TextField(
                 controller: passController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   icon: Icon(Icons.lock),
                   labelText: "Contraseña",
+                  labelStyle: Theme.of(context).textTheme.bodyLarge,
                 ),
                 obscureText: true,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                foregroundColor: Theme.of(context).colorScheme.onSecondary,
+              ),
                 onPressed: () {
                   if (userController.text.isEmpty || passController.text.isEmpty){
                      ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +81,10 @@ class _LoginState extends State<Login> {
                     );
                   }
                 },
-                child: const Text("Ingresar"),
+                child:  Text(
+                "Ingresar",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
               ),
             ],
           ),
